@@ -21,3 +21,9 @@ down:
 
 bash:
 	docker-compose exec $(PHP_APP) bash
+
+clear:
+	docker-compose exec $(PHP_APP) php artisan cache:clear
+	docker-compose exec $(PHP_APP) php artisan config:clear
+	docker-compose exec $(PHP_APP) php artisan route:clear
+	docker-compose exec $(PHP_APP) php artisan view:clear
