@@ -16,8 +16,3 @@ RUN echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREA
 COPY .docker/nginx/nginx.conf /etc/nginx/
 COPY .docker/nginx/sites/default.conf /etc/nginx/conf.d/default.conf
 COPY ./public /var/www/public
-COPY --from=node /usr/share/nginx/html/public /var/www/public
-
-#CMD ["nginx"]
-
-#EXPOSE 80 443

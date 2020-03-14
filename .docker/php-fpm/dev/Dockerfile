@@ -7,13 +7,12 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libmcrypt-dev \
+        libonig-dev \
         git \
         zip \
         unzip
 
-RUN docker-php-ext-install -j$(nproc) mbstring tokenizer mysqli pdo_mysql exif bcmath sockets
-
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN docker-php-ext-install -j$(nproc) tokenizer mysqli pdo_mysql exif bcmath sockets
 
 COPY .docker/php-fpm/dev/laravel.ini /usr/local/etc/php/conf.d
 COPY .docker/php-fpm/dev/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini

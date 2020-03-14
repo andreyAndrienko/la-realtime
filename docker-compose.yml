@@ -10,9 +10,8 @@ services:
       volumes:
         - ./:/var/www:cached
       depends_on:
-        - db_web
-#        - mongodb
-        - redis
+        - db_la_realtime
+        - redis_la_realtime
       user: "1000:0"
 
     nginx_la_realtime:
@@ -23,7 +22,7 @@ services:
         - "80:80"
         - "443:443"
       depends_on:
-        - app-web-ui
+        - app_la_realtime
       volumes:
         - ./public:/var/www/public:cached
 
@@ -47,17 +46,9 @@ services:
       ports:
         - "3306:3306"
 
-#    mongodb:
-#      image: mongo:4.0
-#      ports:
-#        - "27019:27017"
-#      volumes:
-#        - dbmongo:/data/db
-
 volumes:
   dbdata:
   redis-data:
-#  dbmongo:
 
 networks:
   default:
