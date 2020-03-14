@@ -1,0 +1,65 @@
+version: '3.1'
+
+services:
+    app_la_realtime:
+      build:
+        context: .
+        dockerfile: .docker/php-fpm/dev/Dockerfile
+        args:
+          - INSTALL_XDEBUG=false
+      volumes:
+        - ./:/var/www:cached
+      depends_on:
+        - db_web
+#        - mongodb
+        - redis
+      user: "1000:0"
+
+    nginx_la_realtime:
+      build:
+        context: .
+        dockerfile: .docker/nginx/Dockerfile
+      ports:
+        - "80:80"
+        - "443:443"
+      depends_on:
+        - app-web-ui
+      volumes:
+        - ./public:/var/www/public:cached
+
+    redis_la_realtime:
+      image: redis:5.0.2
+      command: ["redis-server", "--appendonly", "yes"]
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis-data:/data:cached
+
+    db_la_realtime:
+      image: mariadb:10.4
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_USER: ${DB_USERNAME}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      volumes:
+        - dbdata:/var/lib/mysql:cached
+      ports:
+        - "3306:3306"
+
+#    mongodb:
+#      image: mongo:4.0
+#      ports:
+#        - "27019:27017"
+#      volumes:
+#        - dbmongo:/data/db
+
+volumes:
+  dbdata:
+  redis-data:
+#  dbmongo:
+
+networks:
+  default:
+    external:
+      name: la_realtime
