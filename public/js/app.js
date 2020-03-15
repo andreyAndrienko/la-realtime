@@ -2032,6 +2032,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -17537,8 +17539,8 @@ var render = function() {
           "ul",
           { staticClass: "list-group" },
           _vm._l(_vm.messages, function(message) {
-            return _c("li", { staticClass: "list-group-item" }, [
-              _vm._v(_vm._s(message.message))
+            return _c("li", { staticClass: "list-group-item mb-4" }, [
+              _c("pre", { domProps: { textContent: _vm._s(message) } })
             ])
           }),
           0

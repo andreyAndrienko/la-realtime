@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col p-4">
                 <ul class="list-group">
-                    <li class="list-group-item" v-for="message in messages">{{ message.message }}</li>
+                    <li class="list-group-item mb-4" v-for="message in messages">
+                        <pre v-text="message"></pre>
+                    </li>
                 </ul>
             </div>
         </div>
