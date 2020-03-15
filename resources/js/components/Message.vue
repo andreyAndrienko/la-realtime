@@ -1,13 +1,21 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-8 mx-auto">
-                <input type="text" class="input-group form-control" v-model="message">
+            <div class="col p-4">
+                <ul class="list-group">
+                    <li class="list-group-item" v-for="message in messages">{{ message.message }}</li>
+                </ul>
             </div>
         </div>
-        <div class="row p-5">
-            <div class="col d-flex justify-content-center">
-                <button class="btn btn-success" @click="sendMessage">
+
+        <div class="row p-4">
+            <div class="col-8 mx-auto">
+                <input type="text" class="input-group form-control"
+                       @keyup.enter="sendMessage"
+                       v-model="message">
+            </div>
+            <div class="col-4">
+                <button class="btn btn-lg btn-success" @click="sendMessage">
                     Отправить
                 </button>
             </div>
@@ -19,21 +27,27 @@
     export default {
         data() {
             return {
-                message: 'w ewfwef '
+                message:  '',
+                messages: []
             }
         },
         created() {
             Echo
                 .channel('messages')
-                .listen('ChatMessage', console.log)
+                .listen('ChatMessage', this.addMessage);
         },
         methods: {
-            sendMessage() {
+            async sendMessage() {
                 if (this.message.trim().length === 0) return;
 
-                axios.post('/message', {
-                    message: this.message
-                })
+                axios.post('/message', {message: this.message});
+
+                this.message = '';
+            },
+            addMessage({message}) {
+                this.messages.push(message);
+
+                this.$toaster.info(message.message)
             }
         }
     }
