@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ChatMessage;
+use App\Services\MessagesService;
 use Illuminate\Http\Request;
 
 class MessagesController extends Controller
 {
-    public function store(Request $request): void
+    public function store(Request $request, MessagesService $messagesService): void
     {
-        ChatMessage::dispatch($request->get('message'));
+        $messagesService->storeNewMessage(auth()->user(), $request->get('message'));
     }
 }

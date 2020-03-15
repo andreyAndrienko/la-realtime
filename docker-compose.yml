@@ -81,9 +81,38 @@ services:
     depends_on:
       - redis_la_realtime
 
+  worker_send_messages:
+    build:
+      context: .
+      dockerfile: .docker/workers/send-message/Dockerfile
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - rabbitmq
+      - app_la_realtime
+      - nginx_la_realtime
+      - db_la_realtime
+
+  rabbitmq:
+    image: rabbitmq:3.7-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    privileged: true
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    depends_on:
+      - app_la_realtime
+      - nginx_la_realtime
+      - db_la_realtime
+
 volumes:
   dbdata:
   redis-data:
+  rabbitmq:
 
 networks:
   default:

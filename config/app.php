@@ -174,7 +174,8 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Bschmitt\Amqp\AmqpServiceProvider::class
     ],
 
     /*
@@ -224,6 +225,7 @@ return [
         'Str'          => Illuminate\Support\Str::class,
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
-        'View'         => Illuminate\Support\Facades\View::class
+        'View'         => Illuminate\Support\Facades\View::class,
+        'Amqp'         => Bschmitt\Amqp\Facades\Amqp::class
     ]
 ];

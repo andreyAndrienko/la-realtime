@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Message
  *
- * @property int $id
- * @property string $message
- * @property int $user_id
+ * @property int                             $id
+ * @property string                          $message
+ * @property int                             $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Message newModelQuery()
@@ -24,8 +24,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Message extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'message'
-    ];
+    protected $guarded = [];
 }
