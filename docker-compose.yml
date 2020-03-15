@@ -66,6 +66,20 @@ services:
       - REDIS_HOSTS=redis:redis_la_realtime:6379:2,redis:redis_la_realtime:6379:1
     ports:
       - "8081:8081"
+    depends_on:
+      - app_la_realtime
+      - db_la_realtime
+      - redis_la_realtime
+
+  websockets:
+    build: .docker/websockets
+    volumes:
+      - ./:/project
+    restart: always
+    ports:
+      - "6001:6001"
+    depends_on:
+      - redis_la_realtime
 
 volumes:
   dbdata:
