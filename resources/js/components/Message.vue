@@ -42,7 +42,11 @@
             async sendMessage() {
                 if (this.message.trim().length === 0) return;
 
-                axios.post('/message', {message: this.message});
+                try {
+                    await axios.post('/message', {message: this.message});
+                } catch (e) {
+                    this.$toaster.error('Error');
+                }
 
                 this.message = '';
             },
